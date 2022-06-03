@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VariableCheck : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class VariableCheck : MonoBehaviour
     public int upgMH;
     public int upgHeal;
     public int upgAtk;
+    public int enemyMaxHP;
+    public int enemyAtk;
 
     // Start is called before the first frame update
     void Start()
@@ -16,10 +19,17 @@ public class VariableCheck : MonoBehaviour
         upgHeal = 0;
         upgAtk = 0;
         sceneNum = 1;
+        enemyMaxHP = 20;
+        enemyAtk = 5;
     }
 
     private void Awake()
     {
         UnityEngine.Object.DontDestroyOnLoad(this);
+    }
+
+    public void GameLoad()
+    {
+        SceneManager.LoadScene("Battle");
     }
 }

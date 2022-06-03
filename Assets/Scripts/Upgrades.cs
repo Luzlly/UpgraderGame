@@ -2,30 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Upgrades : MonoBehaviour
 {
     
-    public VariableCheck varCheck;
+    private VariableCheck varCheck;
+    public Text bottomText;
+
+    public void Start()
+    {
+        varCheck = GameObject.Find("Variables").GetComponent<VariableCheck>();
+    }
 
     public void MaxHealth()
     {
-        varCheck = GameObject.FindWithTag("Variable").GetComponent<VariableCheck>();
         varCheck.upgMH += 5;
-        SceneManager.LoadScene(varCheck.sceneNum);
+        SceneManager.LoadScene("Battle");
         Debug.Log("Loaded Scene: " + varCheck.sceneNum);
     }
 
     public void Healing()
     {
         varCheck.upgHeal += 3;
-        SceneManager.LoadScene(varCheck.sceneNum);
+        SceneManager.LoadScene("Battle");
     }
 
     public void Attack()
     {
         varCheck.upgAtk += 2;
-        SceneManager.LoadScene(varCheck.sceneNum);
+        Debug.Log("Increased Atk by 2, It is now" + varCheck.upgAtk);
+        SceneManager.LoadScene("Battle");
+    }
+
+
+    public void HoverAtk()
+    {
+        bottomText.text = "Increases Attack Power by 2";
+    }
+
+    public void HoverMH()
+    {
+        bottomText.text = "Increases Maximum HP by 5";
+    }
+
+    public void HoverHealing()
+    {
+        bottomText.text = "Increases Healing Potency by 3";
+    }
+
+    public void HoverExit()
+    {
+        bottomText.text = "You Won!!" + "\nChoose your Upgrade!";
     }
 }
