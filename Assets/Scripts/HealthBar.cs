@@ -21,6 +21,6 @@ public class HealthBar : MonoBehaviour
     {
         slider.value = health;
 
-        fill.color = gradient.Evaluate(slider.normalizedValue);
+        fill.GetComponent<Image>().color = gradient.Evaluate(slider.normalizedValue);
     }
 }
