@@ -102,13 +102,13 @@ public class BattleStartTest : MonoBehaviour
     {
         actionText.GetComponent<Text>().enabled = true;
 
-        if (enemyAtking == true)
-        {
-            EnemyAttacks();
-        }
-        else if(enemyAtking == false)
+        if (enemyAtking == false)
         {
             EnemyHeals();
+        }
+        else if(enemyAtking == true)
+        {
+            EnemyAttacks();
         }
 
         enemyHealthBar.SetHealth(enemyHealth);
