@@ -117,7 +117,6 @@ public class BattleInterface : MonoBehaviour
     {
         actionText.GetComponent<Text>().enabled = true;
 
-
         if (enemyAtking == true)
         {
             EnemyAttacks();
@@ -170,11 +169,6 @@ public class BattleInterface : MonoBehaviour
             GameObject.Find("Attack").GetComponent<Button>().interactable = true;
         }
 
-    }
-
-
-    public void Update() //Constantly Checking
-    {
         if (randVar <= 4 && enemyHealth <= (int)(.25 * enemyMaxHealth) && enemyMana != 0) //Changes enemy icon, depending on what their next move is
         {
             iconAttack.SetActive(false);
@@ -187,6 +181,10 @@ public class BattleInterface : MonoBehaviour
             iconHealth.SetActive(false);
             enemyAtking = true;
         }
+    }
+
+    public void Update() //Constantly Checking
+    {
 
         if (playerHealth <= 0) // Lose Condition
         {
