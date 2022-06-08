@@ -1160,6 +1160,7 @@ MonoBehaviour:
   enemyHealthText: {fileID: 21216767}
   actionText: {fileID: 250963699}
   levelText: {fileID: 1240685587}
+  buttonHealText: {fileID: 2065654827}
 --- !u!4 &792790335
 Transform:
   m_ObjectHideFlags: 0

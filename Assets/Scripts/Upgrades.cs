@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class Upgrades : MonoBehaviour
 {
-    
     private VariableCheck varCheck;
     public Text bottomText;
 
@@ -25,7 +24,7 @@ public class Upgrades : MonoBehaviour
 
     public void Healing()
     {
-        varCheck.upgHeal += 3;
+        varCheck.upgHeal += 5;
         SceneManager.LoadScene("Battle");
     }
 
@@ -49,7 +48,7 @@ public class Upgrades : MonoBehaviour
 
     public void HoverHealing()
     {
-        bottomText.text = "Increases Healing Potency by 3";
+        bottomText.text = "Increases Healing Potency by 5";
     }
 
     public void HoverExit()

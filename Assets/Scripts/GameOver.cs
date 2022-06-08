@@ -13,24 +13,13 @@ public class GameOver : MonoBehaviour
     {
         varCheck = GameObject.Find("Variables").GetComponent<VariableCheck>();
         levelText.text = "You Lost on Level " + varCheck.sceneNum;
-        ResetVariables();
-    }
-
-    private void ResetVariables()
-    {
-        varCheck.upgMH = 0;
-        varCheck.upgHeal = 0;
-        varCheck.upgAtk = 0;
-        varCheck.sceneNum = 1;
-        varCheck.enemyMaxHP = 20;
-        varCheck.enemyAtk = 5;
     }
 
     public void RestartGame()
     {
+        varCheck.InitializeVariables();
         SceneManager.LoadScene("Battle");
         Debug.Log("Resetting Game");
-
     }
 
     public void QuitGame()

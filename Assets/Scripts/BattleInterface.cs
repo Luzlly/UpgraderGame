@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class BattleStartTest : MonoBehaviour
+public class BattleInterface : MonoBehaviour
 {
+    // Integers used
     public int playerHealth;
     int playerMaxHealth;
     public int enemyHealth;
     int enemyMaxHealth;
     int playerPower;
+    private int playerMana;
+    private int enemyMana;
     public int randVar;
+
+    //Objects Called Upon
     public GameObject iconHealth;
     public GameObject iconAttack;
     public HealthBar enemyHealthBar;
@@ -20,12 +25,16 @@ public class BattleStartTest : MonoBehaviour
     public Text enemyHealthText;
     public Text actionText;
     public Text levelText;
-    bool enemyAtking;
+    public Text buttonHealText;
     private VariableCheck varCheck;
 
+    bool enemyAtking; //bool(shit) [Get it? Like bullshit, haha I'm very funny]
 
     public void Start()
     {
+        playerMana = 3;
+        enemyMana = 3;
+
         varCheck = GameObject.Find("Variables").GetComponent<VariableCheck>(); //Establishes Connection with Variables Script
         // Initialising Variables
         playerMaxHealth = 20 + varCheck.upgMH;
@@ -39,7 +48,9 @@ public class BattleStartTest : MonoBehaviour
         }
         playerHealth = playerMaxHealth;
         enemyHealth = enemyMaxHealth;
+
         // Enables the on-screen visuals
+
         actionText.GetComponent<Text>().enabled = false;
         enemyAtking = true;
         iconAttack.SetActive(false);
@@ -48,23 +59,25 @@ public class BattleStartTest : MonoBehaviour
         enemyHealthText.text = "HP: " + enemyHealth.ToString() + " / " + enemyMaxHealth.ToString();
         playerHealthText.text = "HP: " + playerHealth.ToString() + " / " + playerMaxHealth.ToString();
         levelText.text = "Level " + varCheck.sceneNum.ToString();
+        buttonHealText.text = "Heal (" + playerMana.ToString() + "/3)";
+        EnableButtons();
+
         // Sets Max Health of Health Bar
         enemyHealthBar.SetMaxHealth(enemyMaxHealth);
         playerHealthBar.SetMaxHealth(playerMaxHealth);
-        EnableButtons();
     }
 
 
     public void PlayerAttacks() // Player turn of Attack
     {
-        
+
         if (playerHealth > 0)
         {
             playerPower = 5 + varCheck.upgAtk;
             enemyHealth -= playerPower;
             enemyHealthBar.SetHealth(enemyHealth);
             enemyHealthText.text = "HP: " + enemyHealth.ToString() + " / " + enemyMaxHealth.ToString();
-            if(enemyHealth < 0)
+            if (enemyHealth < 0)
             {
                 enemyHealth = 0;
             }
@@ -89,12 +102,14 @@ public class BattleStartTest : MonoBehaviour
             playerHealthBar.SetHealth(playerHealth);
             playerHealthText.text = "HP: " + playerHealth.ToString() + " / " + playerMaxHealth.ToString();
             actionText.text = "Player Healed for " + (5 + varCheck.upgHeal);
+            playerMana -= 1;
+            buttonHealText.text = "Heal (" + playerMana.ToString() + "/3)";
             Debug.Log("Player Healed for " + (5 + varCheck.upgHeal));
             if (enemyHealth > 0)
             {
                 EnemyTurn();
             }
-            
+
         }
     }
 
@@ -102,13 +117,14 @@ public class BattleStartTest : MonoBehaviour
     {
         actionText.GetComponent<Text>().enabled = true;
 
-        if (enemyAtking == false)
-        {
-            EnemyHeals();
-        }
-        else if(enemyAtking == true)
+
+        if (enemyAtking == true)
         {
             EnemyAttacks();
+        }
+        else if (enemyAtking == false)
+        {
+            EnemyHeals();
         }
 
         enemyHealthBar.SetHealth(enemyHealth);
@@ -118,7 +134,7 @@ public class BattleStartTest : MonoBehaviour
     public void EnemyAttacks()
     {
         playerHealth -= varCheck.enemyAtk;
-        
+
         if (playerHealth < 0)
         {
             playerHealth = 0;
@@ -136,13 +152,14 @@ public class BattleStartTest : MonoBehaviour
         enemyHealthText.text = "HP: " + enemyHealth.ToString() + " / " + enemyMaxHealth.ToString();
         actionText.text += "\nEnemy Healed for 5";
         randVar = Random.Range(1, 6);
+        enemyMana -= 1;
         EnableButtons();
         Debug.Log("Enemy Healed");
     }
 
     public void EnableButtons()
     {
-        if (playerHealth >= playerMaxHealth) //Disables the Heal Button if player is on full health
+        if (playerHealth >= playerMaxHealth || playerMana == 0) //Disables the Heal Button if player is on full health
         {
             GameObject.Find("Defend").GetComponent<Button>().interactable = false;
             GameObject.Find("Attack").GetComponent<Button>().interactable = true;
@@ -152,13 +169,13 @@ public class BattleStartTest : MonoBehaviour
             GameObject.Find("Defend").GetComponent<Button>().interactable = true;
             GameObject.Find("Attack").GetComponent<Button>().interactable = true;
         }
-        
+
     }
 
 
     public void Update() //Constantly Checking
     {
-        if (randVar >= 4 && enemyHealth <= (int)(.25 * enemyMaxHealth)) //Changes enemy icon, depending on what their next move is
+        if (randVar <= 4 && enemyHealth <= (int)(.25 * enemyMaxHealth) && enemyMana != 0) //Changes enemy icon, depending on what their next move is
         {
             iconAttack.SetActive(false);
             iconHealth.SetActive(true);
@@ -191,9 +208,9 @@ public class BattleStartTest : MonoBehaviour
             {
                 varCheck.enemyMaxHP += 5;
             }
-            if (varCheck.sceneNum % 4 == 0)
+            if (varCheck.sceneNum % 2 != 0)
             {
-                varCheck.enemyAtk += 2;
+                varCheck.enemyAtk += 1;
             }
             varCheck.sceneNum++;
         }
