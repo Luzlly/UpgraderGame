@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Upgrades : MonoBehaviour
 {
+    
     private VariableCheck varCheck;
     public Text bottomText;
 

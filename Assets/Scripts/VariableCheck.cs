@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class VariableCheck : MonoBehaviour
 {
     public int sceneNum;
@@ -28,13 +29,18 @@ public class VariableCheck : MonoBehaviour
         enemyAtk = 5;
     }
 
-    private void Awake()
+        private void Awake()
     {
         UnityEngine.Object.DontDestroyOnLoad(this);
     }
 
-    public void GameLoad()
+    public void PlayGame()
     {
         SceneManager.LoadScene("Battle");
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 }
