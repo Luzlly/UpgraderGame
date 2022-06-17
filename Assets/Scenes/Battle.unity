@@ -685,6 +685,7 @@ MonoBehaviour:
   enemyHealth: 0
   randVar: 0
   playerShield: 0
+  excessDamage: 0
   enemyAtking: 0
   iconHealth: {fileID: 1667024647}
   iconAttack: {fileID: 887470270}
@@ -4146,8 +4147,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.1396, y: 4.2162}
-  m_SizeDelta: {x: 232.9752, y: 185.3384}
+  m_AnchoredPosition: {x: 0.61, y: -0.53}
+  m_SizeDelta: {x: 227.29, y: 172.04}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1577599319
 MonoBehaviour:

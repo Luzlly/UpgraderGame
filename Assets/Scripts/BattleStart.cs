@@ -69,7 +69,7 @@ public class BattleStart : MonoBehaviour
         actionText.GetComponent<Text>().enabled = true;
         iconAttack.SetActive(true);
         iconHealth.SetActive(false);
-        actionText.text = "";
+        actionText.text = "Time to fight!\nChoose your action!";
         levelText.text = "Level " + varCheck.sceneNum;
         enemyHealthText.text = enemyHealth.ToString() + "/" + enemyMaxHealth.ToString();
         playerHealthText.text = playerHealth.ToString() + "/" + playerMaxHealth.ToString();
@@ -121,6 +121,7 @@ public class BattleStart : MonoBehaviour
             if (enemyHealth <= 0)
             {
                 enemyHealth = 0;
+                WinCondition();
             }
             actionText.text = "Player Attacked for " + playerPower;
             enemyHealthBar.SetHealth(enemyHealth);
@@ -163,7 +164,16 @@ public class BattleStart : MonoBehaviour
         {
             EnemyHeals();
         }
-        randVar = Random.Range(1, 6);
+
+        if (enemyHealth >= enemyMaxHealth)
+        {
+            randVar = 1;
+        }
+        else
+        {
+            randVar = Random.Range(1, 6);
+        }
+        
         enemyHealthBar.SetHealth(enemyHealth);
         playerHealthBar.SetHealth(playerHealth);
     }
@@ -175,6 +185,7 @@ public class BattleStart : MonoBehaviour
         if (playerHealth < 0)
         {
             playerHealth = 0;
+            LoseCondition();
         }
         playerHealthText.text = playerHealth.ToString() + "/" + playerMaxHealth.ToString();
         StartCoroutine(WaitForPlayerTurn());
@@ -216,55 +227,35 @@ public class BattleStart : MonoBehaviour
         }
     }
 
-    public void Update() //Constantly Checking
+    private void LoseCondition()
     {
-        if (playerHealth <= 0) // Lose Condition
-        {
-            playerAnimator.SetTrigger("playerDead");
-            print("Game Lost!");
-            actionText.text = "Game Lost at Level " + varCheck.sceneNum.ToString();
-            Debug.Log("Enemy Health: " + enemyHealth);
-            audioSource.PlayOneShot(deathSnd, 0.7F);
-            this.enabled = false;
-            StartCoroutine(WaitForGameOver());
-        }
-        else if (enemyHealth <= 0) // Win Condition
-        {
-            enemyAnimator.SetTrigger("enemyDead");
-            print("Fight Won!");
-            actionText.text = "Fight Won";
-            Debug.Log("Player Health: " + playerHealth);
-            audioSource.PlayOneShot(deathSnd, 0.7F);
-            this.enabled = false;
-            StartCoroutine(WaitForUpgradeLoad());
-
-            if (varCheck.sceneNum % 2 == 0)
-            {
-                varCheck.enemyMaxHP += 5;
-            }
-            if (varCheck.sceneNum % 2 != 0)
-            {
-                varCheck.enemyAtk += 1;
-            }
-            varCheck.sceneNum++;
-        }
-
-        if (playerHealth > playerMaxHealth)
-        {
-            playerHealth = playerMaxHealth;
-        }
-
-        if (enemyHealth >= enemyMaxHealth)
-        {
-            randVar = 1;
-        }
+        playerAnimator.SetTrigger("playerDead");
+        print("Game Lost!");
+        actionText.text = "Game Lost at Level " + varCheck.sceneNum.ToString();
+        Debug.Log("Enemy Health: " + enemyHealth);
+        audioSource.PlayOneShot(deathSnd, 0.7F);
+        this.enabled = false;
+        StartCoroutine(WaitForGameOver());
     }
 
-    private IEnumerator WaitForUpgradeLoad()
+    private void WinCondition()
     {
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene("Upgrades");
+        enemyAnimator.SetTrigger("enemyDead");
+        print("Fight Won!");
+        actionText.text = "Fight Won";
+        Debug.Log("Player Health: " + playerHealth);
+        audioSource.PlayOneShot(deathSnd, 0.7F);
+        this.enabled = false;
 
+        if (varCheck.sceneNum % 2 == 0)
+        {
+            varCheck.enemyMaxHP += 5;
+        }
+        if (varCheck.sceneNum % 2 != 0)
+        {
+            varCheck.enemyAtk += 1;
+        }
+        varCheck.sceneNum++;
     }
 
     private IEnumerator WaitForGameOver()
@@ -277,7 +268,10 @@ public class BattleStart : MonoBehaviour
     private IEnumerator WaitForPlayerTurn()
     {
         yield return new WaitForSeconds(1);
-        PlayerTurn();
+        if (playerHealth > 0)
+        {
+            PlayerTurn();
+        }
     }
 
     private IEnumerator WaitForEnemyTurn()
@@ -285,6 +279,13 @@ public class BattleStart : MonoBehaviour
         GameObject.Find("Attack").GetComponent<Button>().interactable = false;
         GameObject.Find("Defend").GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(1);
-        EnemyTurn();
+        if(enemyHealth > 0)
+        {
+            EnemyTurn();
+        }
+        else if(enemyHealth <= 0)
+        {
+            SceneManager.LoadScene("Upgrades");
+        }
     }
 }
