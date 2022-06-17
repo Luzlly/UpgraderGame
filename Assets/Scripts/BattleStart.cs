@@ -131,8 +131,8 @@ public class BattleStart : MonoBehaviour
             playerPower = 5 + varCheck.upgAtk;
             playerAnimator.SetTrigger("playerHeal"); //Triggers Player Heal Animation
             StartCoroutine(WaitForEnemyTurn());
-            playerHealth += (5 + varCheck.upgHeal);
-            actionText.text = "Player Healed for " + (5 + varCheck.upgHeal);
+            playerHealth += (10 + varCheck.upgHeal);
+            actionText.text = "Player Healed for " + (10 + varCheck.upgHeal);
             if (playerHealth > playerMaxHealth)
             {
                 playerHealth = playerMaxHealth;
@@ -179,7 +179,7 @@ public class BattleStart : MonoBehaviour
     public void EnemyHeals()
     {
         enemyAnimator.SetTrigger("enemyHeal");
-        enemyHealth += 5;
+        enemyHealth += 10;
         enemyHealthText.text = enemyHealth.ToString() + "/" + enemyMaxHealth.ToString();
         StartCoroutine(WaitForPlayerTurn());
         enemyMana -= 1;
