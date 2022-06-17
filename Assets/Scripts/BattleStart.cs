@@ -84,7 +84,7 @@ public class BattleStart : MonoBehaviour
 
     public void PlayerTurn()
     {
-        if (/*playerHealth >= playerMaxHealth ||*/ playerMana == 0) //Disables the Heal Button if player is on full health
+        if (playerMana == 0) //Disables the Heal Button if player is on full health
         {
             GameObject.Find("Defend").GetComponent<Button>().interactable = false;
             GameObject.Find("Attack").GetComponent<Button>().interactable = true;
@@ -182,7 +182,7 @@ public class BattleStart : MonoBehaviour
     {
         enemyAnimator.SetTrigger("enemyAtk");
         EnemyDamage(varCheck.enemyAtk);
-        if (playerHealth < 0)
+        if (playerHealth <= 0)
         {
             playerHealth = 0;
             LoseCondition();
@@ -262,7 +262,6 @@ public class BattleStart : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("GameOver");
-
     }
 
     private IEnumerator WaitForPlayerTurn()

@@ -14,7 +14,7 @@ public class VariableCheck : MonoBehaviour
     public int enemyAtk;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         InitializeVariables();
     }
@@ -29,7 +29,7 @@ public class VariableCheck : MonoBehaviour
         enemyAtk = 5;
     }
 
-        private void Awake()
+    public void Awake()
     {
         UnityEngine.Object.DontDestroyOnLoad(this);
     }
