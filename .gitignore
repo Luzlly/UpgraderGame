@@ -60,3 +60,5 @@ crashlytics-build.properties
 
 Assets/Scenes/Start.unity
 Assets/Scripts/BattleInterface.cs
+Assets/Scripts/BattleInterface.cs
+Assets/Scenes/Start.unity
