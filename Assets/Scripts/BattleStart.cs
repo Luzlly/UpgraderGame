@@ -219,13 +219,6 @@ public class BattleStart : MonoBehaviour
             }
             varCheck.sceneNum++;
         }
-        
-
-        if (playerHealth >= playerMaxHealth) //Disables the Heal Button if player is on full health
-        {
-            GameObject.Find("Defend").GetComponent<Button>().interactable = false;
-        }
-        
 
         if (playerHealth > playerMaxHealth)
         {
