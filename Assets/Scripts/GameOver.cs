@@ -17,9 +17,14 @@ public class GameOver : MonoBehaviour
 
     public void RestartGame()
     {
-        varCheck.InitializeVariables();
         SceneManager.LoadScene("Battle");
         Debug.Log("Resetting Game");
+    }
+
+    public void SaveGame()
+    {
+        varCheck.SavePlayer();
+        Debug.Log("Saved Game");
     }
 
     public void QuitGame()
@@ -27,4 +32,5 @@ public class GameOver : MonoBehaviour
         Application.Quit();
         Debug.Log("Quitting Game");
     }
+
 }

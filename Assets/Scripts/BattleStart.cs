@@ -261,6 +261,8 @@ public class BattleStart : MonoBehaviour
     private IEnumerator WaitForGameOver()
     {
         yield return new WaitForSeconds(1);
+        varCheck.InitializeVariables();
+        varCheck.SavePlayer();
         SceneManager.LoadScene("GameOver");
     }
 

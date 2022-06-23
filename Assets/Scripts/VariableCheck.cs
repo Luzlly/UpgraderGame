@@ -43,4 +43,23 @@ public class VariableCheck : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void SavePlayer()
+    {
+        SaveSystem.SavePlayer(this);
+    }
+
+    public void LoadPlayer()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        upgMH = data.playerMaxHP;
+        upgHeal = data.playerHeal;
+        upgAtk = data.playerAtk;
+        sceneNum = data.level;
+        enemyMaxHP = data.enemyMaxHP;
+        enemyAtk = data.enemyAtk;
+
+        SceneManager.LoadScene("Battle");
+    }
 }
